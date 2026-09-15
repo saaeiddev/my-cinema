@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#080707" />
+  <meta name="description" content="MY CINEMA — موزه تعاملی سه‌بعدی ژانرهای سینما" />
+  <title>MY CINEMA — Interactive 3D Cinema</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/","gsap":"https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js"}}</script>
+</head>
+<body>
+  <div id="app" aria-label="تجربه سه‌بعدی سینما">
+    <canvas id="cinema-canvas" aria-hidden="true"></canvas>
+    <div id="grain" aria-hidden="true"></div><div id="vignette" aria-hidden="true"></div>
+    <div id="film-transition" aria-hidden="true"><span></span><i></i></div>
+    <section id="loader" class="loader" aria-live="polite">
+      <div class="loader__reel" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></div>
+      <h1>MY CINEMA</h1><p>در حال آماده‌سازی سالن سینما…</p>
+      <div class="loader__bar"><span id="loader-bar"></span></div><strong id="loader-percent">0%</strong>
+    </section>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="MY CINEMA — خانه"><span>MY</span> CINEMA</a>
+      <nav class="topnav" aria-label="ناوبری اصلی"><button data-nav="home">خانه</button><button data-nav="genres">ژانرها</button><button data-nav="about">درباره پروژه</button><button data-nav="help">راهنما</button></nav>
+      <div class="top-actions"><button id="quality-btn" class="icon-btn" type="button" aria-label="تغییر کیفیت" title="کیفیت تطبیقی">HD</button><button id="sound-btn" class="icon-btn" type="button" aria-label="فعال‌کردن صدا" aria-pressed="false">🔇</button></div>
+    </header>
+    <aside id="projector-tip" class="projector-tip" role="status">برای نمایش ژانر بعدی کلیک کنید</aside>
+    <main class="screen-ui" aria-live="polite"><div class="screen-ui__content">
+      <div class="screen-ui__eyebrow">INTERACTIVE CINEMA GENRE ARCHIVE</div><h2 id="genre-fa">اکشن</h2><h3 id="genre-en">ACTION</h3><p id="genre-description"></p>
+      <div class="genre-columns"><div><h4>ویژگی‌ها</h4><ul id="genre-features"></ul></div><div><h4>نمونه فیلم‌ها</h4><ul id="genre-examples" class="examples"></ul></div></div>
+    </div></main>
+    <section class="bottom-panel" aria-label="کنترل ژانرها"><button id="prev-btn" class="nav-btn" type="button" aria-label="ژانر قبلی">← <span>قبلی</span></button><div class="genre-status"><div><span id="genre-number">01</span><em>/ 13</em></div><strong id="genre-label">اکشن</strong><div class="status-line"><i id="status-progress"></i></div></div><button id="next-btn" class="nav-btn" type="button" aria-label="ژانر بعدی"><span>بعدی</span> →</button></section>
+    <section id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal__card"><button id="modal-close" class="modal__close" type="button" aria-label="بستن">×</button><p class="modal__kicker">MY CINEMA</p><h2 id="modal-title">راهنما</h2><div id="modal-body"></div></div></section>
+    <div id="webgl-fallback" class="fallback" hidden><h1>MY CINEMA</h1><p>مرورگر یا دستگاه شما WebGL را پشتیبانی نمی‌کند. لطفاً از نسخه جدید Safari، Chrome، Edge یا Firefox استفاده کنید.</p></div>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body></html>
