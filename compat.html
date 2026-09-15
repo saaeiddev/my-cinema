@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#080707" />
   <meta name="description" content="MY CINEMA — حالت سازگار سینمای تعاملی" />
-  <title>MY CINEMA — Compatibility Mode</title>
+  <title>MY CINEMA — Premium Compatibility Mode</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=3" />
-  <link rel="stylesheet" href="./compat.css?v=3" />
+  <link rel="stylesheet" href="./styles.css?v=7" />
+  <link rel="stylesheet" href="./compat.css?v=7" />
 </head>
 <body>
   <div id="app" aria-label="تجربه سینمای تعاملی">
@@ -19,7 +19,7 @@
     <div id="film-transition" aria-hidden="true"><span></span><i></i></div>
     <section id="loader" class="loader" aria-live="polite">
       <div class="loader__reel" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></div>
-      <h1>MY CINEMA</h1><p>در حال آماده‌سازی حالت سازگار…</p>
+      <h1>MY CINEMA</h1><p>در حال آماده‌سازی سالن سینما…</p>
       <div class="loader__bar"><span id="loader-bar"></span></div><strong id="loader-percent">0%</strong>
     </section>
     <header class="topbar">
@@ -36,15 +36,6 @@
     <section id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal__card"><button id="modal-close" class="modal__close" type="button" aria-label="بستن">×</button><p class="modal__kicker">MY CINEMA</p><h2 id="modal-title">راهنما</h2><div id="modal-body"></div></div></section>
     <div id="webgl-fallback" class="fallback" hidden><h1>MY CINEMA</h1><p>در حال راه‌اندازی حالت سازگار…</p></div>
   </div>
-  <script>
-    (() => {
-      const original = HTMLCanvasElement.prototype.getContext;
-      HTMLCanvasElement.prototype.getContext = function(type, ...args) {
-        if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
-        return original.call(this, type, ...args);
-      };
-    })();
-  </script>
-  <script type="module" src="./compat.js?v=3"></script>
+  <script src="./compat.js?v=7"></script>
 </body>
 </html>
