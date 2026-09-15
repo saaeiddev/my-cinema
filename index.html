@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./compat.css?v=1" />
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/","gsap":"https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js"}}</script>
 </head>
 <body>
@@ -34,7 +35,7 @@
     </div></main>
     <section class="bottom-panel" aria-label="کنترل ژانرها"><button id="prev-btn" class="nav-btn" type="button" aria-label="ژانر قبلی">← <span>قبلی</span></button><div class="genre-status"><div><span id="genre-number">01</span><em>/ 13</em></div><strong id="genre-label">اکشن</strong><div class="status-line"><i id="status-progress"></i></div></div><button id="next-btn" class="nav-btn" type="button" aria-label="ژانر بعدی"><span>بعدی</span> →</button></section>
     <section id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal__card"><button id="modal-close" class="modal__close" type="button" aria-label="بستن">×</button><p class="modal__kicker">MY CINEMA</p><h2 id="modal-title">راهنما</h2><div id="modal-body"></div></div></section>
-    <div id="webgl-fallback" class="fallback" hidden><h1>MY CINEMA</h1><p>امکان راه‌اندازی موتور سه‌بعدی در این مرورگر فراهم نشد. Hardware/Graphics Acceleration مرورگر را فعال کنید و صفحه را دوباره باز کنید.</p></div>
+    <div id="webgl-fallback" class="fallback" hidden><h1>MY CINEMA</h1><p>در حال راه‌اندازی حالت سازگار…</p></div>
   </div>
-  <script type="module" src="./app.js?v=2"></script>
+  <script type="module" src="./compat.js?v=1"></script>
 </body></html>
