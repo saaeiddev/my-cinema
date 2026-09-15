@@ -12,8 +12,13 @@ const forceCompat = new URLSearchParams(location.search).has('compat');
 if (forceCompat || !hasWebGL()) {
   location.replace('./compat.html?fallback=1');
 } else {
-  import('./premium.js?v=1').catch((err) => {
-    console.error('MY CINEMA premium renderer failed:', err);
-    location.replace('./compat.html?fallback=1&reason=premium');
-  });
+  (async () => {
+    try {
+      await import('./three-safe.js?v=1');
+      await import('./premium.js?v=1');
+    } catch (err) {
+      console.error('MY CINEMA premium renderer failed:', err);
+      location.replace('./compat.html?fallback=1&reason=premium');
+    }
+  })();
 }
