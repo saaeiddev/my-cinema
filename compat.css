@@ -1,0 +1,102 @@
+/* MY CINEMA compatibility renderer — CSS 3D / DOM fallback for browsers where WebGL is unavailable */
+body.compat-mode { overflow:hidden; background:#050404; }
+body.compat-mode #cinema-canvas { display:none !important; }
+body.compat-mode #webgl-fallback { display:none !important; }
+
+#compat-scene {
+  position:fixed; inset:0; overflow:hidden; z-index:0;
+  perspective:1100px; perspective-origin:50% 46%;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(255,196,121,.11), transparent 34%),
+    linear-gradient(#090707 0 70%, #130b09 70% 100%);
+  --mood:#ff7b35;
+}
+#compat-scene::before {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--mood) 16%, transparent), transparent 44%);
+  mix-blend-mode:screen; opacity:.55; transition:background .8s ease;
+}
+.compat-room { position:absolute; inset:0; transform-style:preserve-3d; animation:compat-enter 1.45s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes compat-enter { from{transform:translateZ(-260px) scale(.86); filter:brightness(.2) blur(7px)} to{transform:translateZ(0) scale(1); filter:brightness(1) blur(0)} }
+
+.compat-wall { position:absolute; left:8%; right:8%; top:8%; bottom:26%; border-radius:18px 18px 4px 4px;
+  background:linear-gradient(90deg,#2b1515,#421f1c 18%,#211111 50%,#421f1c 82%,#2b1515);
+  box-shadow:inset 0 0 0 2px rgba(210,171,104,.18), inset 0 0 120px #000, 0 36px 80px #000;
+  transform:translateZ(-120px);
+}
+.compat-wall::before,.compat-wall::after { content:""; position:absolute; top:8%; bottom:8%; width:16%; opacity:.5;
+  background:repeating-linear-gradient(90deg, rgba(198,153,84,.12) 0 2px, transparent 2px 24px);
+}
+.compat-wall::before{left:2%}.compat-wall::after{right:2%}
+
+.compat-screen-frame { position:absolute; left:50%; top:15%; width:min(58vw,900px); aspect-ratio:16/9; transform:translateX(-50%) translateZ(-50px);
+  padding:12px; border-radius:7px; background:linear-gradient(135deg,#8a6334,#d2a65a,#5d3e20,#b68b4c);
+  box-shadow:0 0 0 5px #1a0f0b, 0 20px 55px #000, 0 0 48px color-mix(in srgb, var(--mood) 18%, transparent);
+}
+.compat-screen { position:relative; width:100%; height:100%; overflow:hidden; border-radius:2px;
+  background:radial-gradient(ellipse at center,#e8dfc7 0,#c9bfa9 58%,#8e8476 100%);
+  box-shadow:inset 0 0 55px rgba(34,24,17,.42);
+}
+.compat-screen::after { content:""; position:absolute; inset:0; opacity:.22; pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.08) 0 1px,transparent 1px 4px);
+}
+.compat-icon { position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); font-size:clamp(56px,8vw,128px); line-height:1;
+  filter:drop-shadow(0 16px 14px rgba(0,0,0,.33)); text-shadow:0 0 24px color-mix(in srgb, var(--mood) 55%, transparent);
+  animation:icon-float 3.2s ease-in-out infinite;
+}
+@keyframes icon-float { 50% { transform:translate(-50%,calc(-50% - 10px)) rotate(2deg) scale(1.04); } }
+.compat-icon.change { animation:icon-change .6s ease both; }
+@keyframes icon-change { 0%{opacity:0; transform:translate(-50%,-50%) scale(.55) rotate(-8deg); filter:blur(8px)} 70%{opacity:1;transform:translate(-50%,-50%) scale(1.08)} 100%{transform:translate(-50%,-50%) scale(1)} }
+
+.compat-curtain { position:absolute; top:9%; bottom:25%; width:23%; z-index:2; pointer-events:none;
+  background:repeating-linear-gradient(90deg,#3f0209 0 8%,#7f0a18 8% 17%,#4c030c 17% 26%);
+  box-shadow:inset -20px 0 35px rgba(0,0,0,.55), inset 18px 0 28px rgba(255,80,80,.08); opacity:.95;
+}
+.compat-curtain.left { left:-2%; clip-path:polygon(0 0,100% 0,76% 100%,0 100%); }
+.compat-curtain.right { right:-2%; clip-path:polygon(0 0,100% 0,100% 100%,24% 100%); transform:scaleX(-1); }
+
+.compat-floor { position:absolute; left:-10%; right:-10%; bottom:-10%; height:48%; transform-origin:50% 100%; transform:rotateX(66deg) translateZ(-15px);
+  background:linear-gradient(#25130d,#100907 70%), repeating-linear-gradient(90deg,transparent 0 50px,rgba(255,255,255,.025) 50px 52px);
+  box-shadow:inset 0 40px 70px #000;
+}
+.compat-aisle { position:absolute; left:47%; width:6%; bottom:0; height:39%; transform:perspective(550px) rotateX(63deg); transform-origin:bottom;
+  background:linear-gradient(90deg,rgba(255,170,85,.35),#1b0d08 14%,#32160c 50%,#1b0d08 86%,rgba(255,170,85,.35));
+}
+.compat-seat-row { position:absolute; left:7%; right:7%; height:64px; display:flex; justify-content:center; gap:clamp(8px,1.2vw,20px); z-index:3; transform-style:preserve-3d; }
+.compat-seat { width:clamp(42px,5.8vw,84px); height:58px; border-radius:22px 22px 9px 9px; background:linear-gradient(90deg,#36050a,#77101a 48%,#3c050b);
+  border:1px solid rgba(255,180,130,.08); box-shadow:inset 0 7px 12px rgba(255,255,255,.05),0 9px 14px rgba(0,0,0,.75); position:relative;
+}
+.compat-seat::after { content:""; position:absolute; left:12%; right:12%; bottom:-13px; height:20px; border-radius:4px; background:#170c09; }
+
+.compat-projector { position:absolute; left:10%; bottom:17%; width:190px; height:130px; z-index:6; transform:rotateY(7deg); cursor:pointer; filter:drop-shadow(0 18px 20px #000); }
+.compat-projector:hover { filter:drop-shadow(0 18px 20px #000) drop-shadow(0 0 14px rgba(255,203,122,.45)); }
+.compat-projector-body { position:absolute; left:36px; top:46px; width:110px; height:64px; border-radius:13px; background:linear-gradient(145deg,#444,#171717 55%,#2e2e2e); border:2px solid #8d6d3e; box-shadow:inset 0 0 16px #000; }
+.compat-projector-body::after { content:""; position:absolute; right:-42px; top:17px; width:48px; height:25px; border-radius:0 50% 50% 0; background:linear-gradient(90deg,#222,#70633f); box-shadow:0 0 10px #ffcf79; }
+.compat-reel { position:absolute; top:0; width:72px; height:72px; border:7px solid #67615a; border-radius:50%; box-shadow:inset 0 0 0 2px #171717,0 3px 12px #000; }
+.compat-reel::before { content:""; position:absolute; inset:12px; border-radius:50%; background:conic-gradient(#242424 0 14%,transparent 14% 26%,#242424 26% 40%,transparent 40% 54%,#242424 54% 68%,transparent 68% 82%,#242424 82%); }
+.compat-reel.r1{left:18px}.compat-reel.r2{left:100px}
+.compat-projector.playing .compat-reel { animation:reel-spin .48s linear infinite; }
+@keyframes reel-spin { to{ transform:rotate(360deg) } }
+.compat-projector-stand { position:absolute; left:85px; top:106px; width:11px; height:112px; background:linear-gradient(90deg,#171717,#777,#191919); }
+.compat-projector-stand::after { content:""; position:absolute; left:-35px; bottom:-8px; width:80px; height:10px; border-radius:50%; background:#151515; }
+.compat-beam { position:absolute; left:174px; top:61px; width:min(46vw,700px); height:190px; transform-origin:left center; transform:perspective(500px) rotateY(-6deg) skewY(-7deg); opacity:0; pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,224,154,.21),rgba(255,224,154,.06),transparent); clip-path:polygon(0 43%,100% 0,100% 100%,0 57%); filter:blur(4px); }
+.compat-projector.playing .compat-beam { animation:beam-pulse .7s ease; }
+@keyframes beam-pulse { 0%{opacity:0} 20%{opacity:1} 100%{opacity:.12} }
+
+.compat-hint { position:absolute; left:9%; bottom:9%; z-index:7; color:#e7d7bc; font-family:Vazirmatn,sans-serif; font-size:12px; opacity:.72; }
+body.compat-mode .screen-ui { z-index:8; }
+body.compat-mode .topbar, body.compat-mode .bottom-panel, body.compat-mode .modal, body.compat-mode #grain, body.compat-mode #vignette, body.compat-mode #film-transition { z-index:20; }
+body.compat-mode .screen-ui__content { background:rgba(18,12,9,.2); backdrop-filter:blur(1px); }
+
+@media (max-width:700px){
+  .compat-wall{left:0;right:0;top:8%;bottom:31%}
+  .compat-screen-frame{top:17%;width:84vw}
+  .compat-curtain{width:18%;bottom:31%}
+  .compat-projector{left:1%;bottom:22%;transform:scale(.72);transform-origin:left bottom}
+  .compat-seat-row{left:1%;right:1%;gap:6px}.compat-seat{width:42px;height:48px}
+  .compat-seat-row .compat-seat:nth-child(n+7){display:none}
+  .compat-icon{font-size:68px}
+}
+
+@media (prefers-reduced-motion:reduce){ .compat-room,.compat-icon,.compat-projector.playing .compat-reel,.compat-projector.playing .compat-beam{animation:none!important} }
